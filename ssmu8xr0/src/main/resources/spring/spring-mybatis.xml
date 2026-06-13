@@ -11,7 +11,22 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-    <!-- 配置数据源 -->
+    <!-- ============================================================
+         Option A: JNDI DataSource (recommended for production)
+         Configure the Resource in Tomcat conf/context.xml, then
+         uncomment this bean and comment out the Druid bean below.
+         ============================================================ -->
+    <!--
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/ssmu8xr0"/>
+    </bean>
+    -->
+
+    <!-- ============================================================
+         Option B: Druid Connection Pool (default)
+         Values read from config.properties; override with env vars
+         DB_URL / DB_USERNAME / DB_PASSWORD at runtime.
+         ============================================================ -->
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url}"/>
         <property name="username" value="${jdbc_username}"/>

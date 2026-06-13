@@ -1,0 +1,21 @@
+# Java / Maven
+ssmu8xr0/target/
+*.class
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Vue admin — only dist/ is built by CI, source stays in repo
+ssmu8xr0/src/main/webapp/admin/node_modules/
+ssmu8xr0/src/main/webapp/admin/dist/

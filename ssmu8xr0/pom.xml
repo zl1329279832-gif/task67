@@ -8,12 +8,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- JDK 8 baseline; JDK 11 also supported — see JDK-MIGRATION.md -->
+		<java.version>1.8</java.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<druid.version>1.1.0</druid.version>
 		<fastjson.version>1.2.8</fastjson.version>
 		<mybaitsplus.version>2.3</mybaitsplus.version>
 		<mysql.version>5.1.38</mysql.version>
+		<mssql.version>6.2.0.jre8</mssql.version>
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j.version>1.7.19</slf4j.version>
 		<aspectjweaver.version>1.8.8</aspectjweaver.version>
@@ -125,25 +128,29 @@
 		</dependency>
 
 		<!-- Mysql -->
+		<!--
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+		-->
 
+		<!--
 		<dependency>
 		    <groupId>com.microsoft.sqlserver</groupId>
 		    <artifactId>sqljdbc4</artifactId>
-		    <scope>4.0</scope>
+		    <scope>runtime</scope>
 		    <version>4.0</version>
 		</dependency>
-		
+
 		<dependency>
 		    <groupId>com.microsoft.sqlserver</groupId>
 		    <artifactId>mssql-jdbc</artifactId>
-		    <version>6.2.0.jre8</version>
+		    <version>${mssql.version}</version>
 		    <scope>runtime</scope>
 		</dependency>
+		-->
 
 		<!-- Druid -->
 		<dependency>
@@ -261,17 +268,69 @@
 	</dependencies>
 
 	<build>
-	<!-- 项目访问名称 -->
 		<finalName>ssmu8xr0</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<warName>ssmu8xr0</warName>
+					<!-- Exclude Vue source / tooling; only ship admin/dist -->
+					<packagingExcludes>
+						admin/src/**,
+						admin/node_modules/**,
+						admin/package.json,
+						admin/package-lock.json,
+						admin/vue.config.js,
+						admin/babel.config.js,
+						admin/*.bat,
+						admin/public/**
+					</packagingExcludes>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- ============================================================
+	     Profiles: activate with  mvn package -P mysql  or  -P sqlserver
+	     mysql is active by default.
+	     ============================================================ -->
+	<profiles>
+		<profile>
+			<id>mysql</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<version>${mysql.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>sqlserver</id>
+			<dependencies>
+				<dependency>
+					<groupId>com.microsoft.sqlserver</groupId>
+					<artifactId>mssql-jdbc</artifactId>
+					<version>${mssql.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>
