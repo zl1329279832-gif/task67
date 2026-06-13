@@ -14,6 +14,7 @@
         <result property="rongnarenshu" column="rongnarenshu"/>
         <result property="shebeixiangqing" column="shebeixiangqing"/>
         <result property="huiyishixiangqing" column="huiyishixiangqing"/>
+        <result property="bumen" column="bumen"/>
     </resultMap>
 
 	<select id="selectListVO"

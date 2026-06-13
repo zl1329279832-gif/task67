@@ -150,8 +150,14 @@ public class HuiyishiyuyueEntity<T> implements Serializable {
 	/**
 	 * 审核回复
 	 */
-					
+
 	private String shhf;
+
+	/**
+	 * 设备编号（预约绑定的设备，可为空）
+	 */
+
+	private String shebeibianhao;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -363,6 +369,18 @@ public class HuiyishiyuyueEntity<T> implements Serializable {
 	 */
 	public String getShhf() {
 		return shhf;
+	}
+	/**
+	 * 设置：设备编号
+	 */
+	public void setShebeibianhao(String shebeibianhao) {
+		this.shebeibianhao = shebeibianhao;
+	}
+	/**
+	 * 获取：设备编号
+	 */
+	public String getShebeibianhao() {
+		return shebeibianhao;
 	}
 
 }

@@ -21,6 +21,7 @@
         <result property="bumen" column="bumen"/>
         <result property="sfsh" column="sfsh"/>
         <result property="shhf" column="shhf"/>
+        <result property="shebeibianhao" column="shebeibianhao"/>
     </resultMap>
 
 	<select id="selectListVO"
@@ -46,7 +47,30 @@
 		resultType="com.entity.view.HuiyishiyuyueView" >
 		SELECT * FROM huiyishiyuyue  huiyishiyuyue <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
 
-	
+	<!-- 检查同一会议室时间段冲突（待审核或已通过的记录） -->
+	<select id="selectTimeConflictCount" resultType="int">
+		SELECT count(1) FROM huiyishiyuyue
+		WHERE huiyishibianhao = #{huiyishibianhao}
+		  AND (sfsh IS NULL OR sfsh != '否')
+		  AND kaishishijian &lt; #{jieshushijian}
+		  AND jieshushijian &gt; #{kaishishijian}
+		  <if test="excludeId != null">
+		  AND id != #{excludeId}
+		  </if>
+	</select>
+
+	<!-- 检查同一设备时间段冲突（待审核或已通过的记录） -->
+	<select id="selectShebeiConflictCount" resultType="int">
+		SELECT count(1) FROM huiyishiyuyue
+		WHERE shebeibianhao = #{shebeibianhao}
+		  AND (sfsh IS NULL OR sfsh != '否')
+		  AND kaishishijian &lt; #{jieshushijian}
+		  AND jieshushijian &gt; #{kaishishijian}
+		  <if test="excludeId != null">
+		  AND id != #{excludeId}
+		  </if>
+	</select>
+
+
 </mapper>

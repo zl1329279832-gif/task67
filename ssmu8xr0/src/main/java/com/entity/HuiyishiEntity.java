@@ -102,8 +102,14 @@ public class HuiyishiEntity<T> implements Serializable {
 	/**
 	 * 会议室详情
 	 */
-					
+
 	private String huiyishixiangqing;
+
+	/**
+	 * 所属部门（限定可预约部门，为空表示不限）
+	 */
+
+	private String bumen;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -231,6 +237,18 @@ public class HuiyishiEntity<T> implements Serializable {
 	 */
 	public String getHuiyishixiangqing() {
 		return huiyishixiangqing;
+	}
+	/**
+	 * 设置：所属部门
+	 */
+	public void setBumen(String bumen) {
+		this.bumen = bumen;
+	}
+	/**
+	 * 获取：所属部门
+	 */
+	public String getBumen() {
+		return bumen;
 	}
 
 }
