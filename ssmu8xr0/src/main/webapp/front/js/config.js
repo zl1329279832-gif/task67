@@ -52,7 +52,12 @@ var indexNav = [
 }
 ]
 
-var adminurl =  "http://localhost:8080/ssmu8xr0/admin/dist/index.html";
+// 动态计算管理后台链接，避免硬编码域名
+var _cfgPath = (function(){
+	var p = window.location.pathname, fi = p.indexOf('/front/');
+	return fi > 0 ? p.substring(0, fi) : '';
+})();
+var adminurl = window.location.protocol + '//' + window.location.host + _cfgPath + '/admin/dist/index.html';
 
 var cartFlag = false
 

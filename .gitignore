@@ -1,0 +1,23 @@
+# === Maven ===
+target/
+
+# === Node / npm ===
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# === WAR ===
+*.war
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# === OS ===
+.DS_Store
+Thumbs.db

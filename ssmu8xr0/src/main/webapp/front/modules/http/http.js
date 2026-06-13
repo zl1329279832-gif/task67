@@ -3,9 +3,13 @@ layui.define(['jquery', 'layer'], function(exports) { //提示：模块也可以
 	"use strict";
 	var jquery = layui.jquery,
 		layer = layui.layer,
-        baseurl = "http://localhost:8080/ssmu8xr0/";
+		// 动态计算 contextPath，避免硬编码域名
+		_pathname = window.location.pathname,
+		_frontIdx = _pathname.indexOf('/front/'),
+		_ctxPath = _frontIdx > 0 ? _pathname.substring(0, _frontIdx) : '',
+        baseurl = window.location.protocol + '//' + window.location.host + _ctxPath + '/';
 	var http = {
-        domain : "http://localhost:8080/ssmu8xr0/",
+        domain : baseurl,
 		baseurl: baseurl,
 		/**
 		 * 获取传递参数值(修改支持中文)
